@@ -27,28 +27,54 @@ def play_game():
     # defining random word length
     word_length = len(chosen_word)
     # attributing underscores to the length
-    underscore = '_ ' * word_length
+    underscore = ['_ '] * word_length
 
     print(chosen_word)
     print(f'Your word has {word_length} letters.')
     print(underscore)
 
+    # making a new list to catch wrong guesses
+    guesses = []
+    # starting a wrong guesses talley
+    guess_count = 0
+    # function for guesses
+    while guess_count < 8:
+        user_guess = input("Guess a letter: ")
+        print('Guess: ', user_guess)
+        if len(user_guess) > 1:
+            print("thats a no-no")
+        elif user_guess not in chosen_word and user_guess not in guesses:
+            guess_count += 1
+            guesses.append(user_guess)
+            print('Wrong guesses: ', guess_count)
+            print('Guesses: ', guesses)
+        elif user_guess in chosen_word:
+            for letter in range(len(chosen_word)):
+                if user_guess == chosen_word[letter]:
+                    underscore[letter] = chosen_word[letter]
+                    guesses.append(user_guess)
+            print("".join(underscore))
+            if '_ ' not in underscore:
+                print("winner winner chicken dinner")
+                play_again = input("Do you want to play again Y/N?\n")
+                if play_again == 'Y':
+                    play_game()
+                elif play_again == 'y':
+                    play_game()
+                else:
+                    exit()
+    else:
+        guess_count == 8
+        print("The word was:", chosen_word)
+    play_again = input("You lost, try again?  Y/N?\n")
+    if play_again == 'Y':
+        play_game()
+    elif play_again == 'y':
+        play_game()
+    else:
+        exit()
 
-# 8 wrong guesses loop
-# count = 0
-# while wrong_guesses <= 8:
-#     play_game()
-#     if wrong_guesses == 8:
-#         display random_word
-#         print("womp womp")
-#         break
-#     else:
-#         display random_word
-#         print("Winner winner chicken dinner")
-# PLAY AGAIN LOOP
-# play_again = input("Do you want to play again Y/N?\n")
-# if play_again == 'Y':
-#     play_game()
+
 if __name__ == "__main__":
     play_game()
 
